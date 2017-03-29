@@ -1,6 +1,6 @@
 
 NODES =
-NODES += node1
-NODES += node2
+NODES += node01
+NODES += node02
 NODES +=
 
