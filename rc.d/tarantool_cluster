@@ -1,0 +1,67 @@
+#!/bin/sh
+
+#
+# Startup script for tarantool_cluster on FreeBSD
+#
+
+# This goes in /usr/local/etc/rc.d and gets run at boot-time.
+
+# PROVIDE: tarantool_cluster
+# REQUIRE: redis couchdb
+# KEYWORD: shutdown
+
+
+# Add the following lines to /etc/rc.conf to enable tarantool_cluster:
+#
+#tarantool_cluster_enable="YES"
+#tarantool_cluster_user="tarantool_cluster"
+#tarantool_cluster_nodes="tarantool_cluster01 tarantool_cluster02"
+#tarantool_cluster_path="/home/general/tarantool_cluster"
+#
+
+
+. /etc/rc.subr
+
+load_rc_config tarantool_cluster
+
+# set defaults
+tarantool_cluster_enable=${tarantool_cluster_enable:-NO}
+user=${tarantool_cluster_user:-general}
+nodes=${tarantool_cluster_nodes:-"node01 node02"}
+path=${tarantool_cluster_path:-"~${user}/tarantool_cluster"}
+
+
+. /etc/rc.subr
+
+name="tarantool_cluster"
+#rcvar=`set_rcvar`
+rcvar=tarantool_cluster_enable
+
+
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+
+
+
+tarantool_cluster_start()
+{
+for node in ${nodes}; do
+  echo -n " make ${node}_start.. " 
+  su ${user} -c "cd ${path}; make ${node}_start; cd -"
+done
+}
+
+
+tarantool_cluster_stop()
+{
+for node in ${nodes}; do
+  echo -n " make ${node}_start.. " 
+  su ${user} -c "cd ${path}; make ${node}_stop; cd -"
+done
+}
+
+
+load_rc_config $name
+run_rc_command "$1"
+
