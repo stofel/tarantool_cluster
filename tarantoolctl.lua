@@ -45,7 +45,6 @@ function start(instance)
       logger              = './' .. instance .. '/tarantool.log',
       wal_dir             = './' .. instance,
       snap_dir            = './' .. instance,
-      sophia_dir          = './' .. instance,
       listen              = conf.listen,
       replication_source  = conf.replication_source,
       background          = true
