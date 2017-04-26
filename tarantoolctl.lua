@@ -45,7 +45,6 @@ function start(instance)
       logger              = './' .. instance .. '/tarantool.log',
       wal_dir             = './' .. instance,
       snap_dir            = './' .. instance,
-      sophia_dir          = './' .. instance,
       listen              = conf.listen,
       replication_source  = conf.replication_source,
       background          = true
@@ -135,7 +134,7 @@ local available_commands = {
 
 
 local function usage()
-    print("Usage: ./tarantoolctl", table.concat(available_commands, '|'), 'instance')
+    print("Usage: ./tarantoolctl.lua", table.concat(available_commands, '|'), 'instance')
     os.exit(1)
 end
 

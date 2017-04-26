@@ -1,6 +1,8 @@
 
 NODES =
-NODES += node01
-NODES += node02
+NODES += egs01
+NODES += egs02
+NODES += egs
+NODES += egs_adm
 NODES +=
 
