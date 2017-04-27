@@ -39,20 +39,25 @@ end
 
 function start(instance)
     log.info("Starting " .. instance .." instance...")
-    local conf = getData(instance)
-    box.cfg{
-      pid_file            = './' .. instance .. '/tarantool.pid',
-      logger              = './' .. instance .. '/tarantool.log',
-      wal_dir             = './' .. instance,
-      snap_dir            = './' .. instance,
-      listen              = conf.listen,
-      replication_source  = conf.replication_source,
-      background          = true
+    local local_conf = getData(instance)
+    local conf = {
+      pid_file     = './' .. instance .. '/tarantool.pid',
+      logger       = './' .. instance .. '/tarantool.log',
+      wal_dir      = './' .. instance,
+      snap_dir     = './' .. instance,
+      background   = true
     }
+    
+
+    for k,v in pairs(local_conf.box) do conf[k] = v  end
+    box.cfg(conf)
 
 
-    local console = require('console')
-    console.listen(conf.console_url)
+    -- Start console
+    if local_conf.console_url then
+      local console = require('console')
+      console.listen(local_conf.console_url)
+    end
 
 
     local success, data = pcall(dofile, './funs.lua')
