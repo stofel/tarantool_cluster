@@ -1,4 +1,5 @@
-#!/usr/bin/env tarantool
+#!./1.9/tarantool
+--#!/usr/bin/env tarantool
 
 
 local fio = require 'fio'
@@ -42,9 +43,12 @@ function start(instance)
     local local_conf = getData(instance)
     local conf = {
       pid_file     = './' .. instance .. '/tarantool.pid',
-      logger       = './' .. instance .. '/tarantool.log',
+      --logger       = './' .. instance .. '/tarantool.log',
+      log          = './' .. instance .. '/tarantool.log',
       wal_dir      = './' .. instance,
-      snap_dir     = './' .. instance,
+      --snap_dir     = './' .. instance,
+      memtx_dir    = './' .. instance,
+      vinyl_dir    = './' .. instance,
       background   = true
     }
     
