@@ -33,7 +33,7 @@ l:
 	@echo $(NODES:R:[-1..1])
 
 fstart:
-	-@for i in $(NODES:O:[-1..1]); do \
+	-@for i in $(NODES); do \
       $(CMD) start $$i; \
     done
 

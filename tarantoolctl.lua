@@ -44,7 +44,7 @@ function start(instance)
     local conf = {
       pid_file     = './' .. instance .. '/tarantool.pid',
       --logger       = './' .. instance .. '/tarantool.log',
-      log          = './' .. instance .. '/tarantool.log',
+      log          = './' .. instance .. '/log',
       wal_dir      = './' .. instance,
       --snap_dir     = './' .. instance,
       memtx_dir    = './' .. instance,
@@ -72,10 +72,12 @@ function start(instance)
             os.execute('tail -n 10 ' .. box.cfg.logger)
         end
     else
-      success, data = pcall(dofile, './' .. instance .. '/start.lua')
+      success1, data1 = pcall(dofile, './start.lua')
+      success2, data2 = pcall(dofile, './' .. instance .. '/start.lua')
       -- if load fails - show last 10 lines of the log file
-      if not success then
-        print('Start failed: ' .. data)
+      if not success1 or not success2 then
+        print('Start failed: ' .. data1)
+        print('Start failed: ' .. data2)
         if fio.stat(box.cfg.logger) then
             os.execute('tail -n 10 ' .. box.cfg.logger)
         end
